@@ -1,0 +1,6 @@
+@use 'common';
+
+.main {
+  @include common.flex-col;
+  align-items: center;
+}

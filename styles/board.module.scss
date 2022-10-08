@@ -1,0 +1,15 @@
+@use 'common';
+
+.main {
+  @include common.flex-col;
+  align-items: center;
+}
+
+.section {
+  width: 500px;
+}
+
+.thread-list {
+  @include common.flex-col($gap: 10px);
+  margin-bottom: 10px;
+}

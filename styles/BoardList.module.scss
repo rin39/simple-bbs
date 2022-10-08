@@ -1,0 +1,11 @@
+@use 'variables';
+@use 'common';
+
+.header {
+  margin-bottom: 20px;
+  color: variables.$fg-alt;
+}
+
+.list {
+  @include common.flex-col($gap: 15px);
+}

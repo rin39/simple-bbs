@@ -1,0 +1,9 @@
+@use 'common';
+
+.header {
+  padding: 30px;
+}
+
+.nav-list {
+  @include common.flex($gap: 10px);
+}

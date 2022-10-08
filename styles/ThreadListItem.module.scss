@@ -1,0 +1,26 @@
+@use 'common';
+@use 'variables';
+
+.thread-list-item {
+  padding: 10px;
+  border: 1px solid;
+  &:hover {
+    cursor: pointer;
+    background-color: variables.$bg-lighter;
+  }
+}
+
+.head {
+  @include common.flex;
+  justify-content: space-between; 
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.header {
+  color: variables.$fg-alt;
+}
+
+.first-message {
+  overflow-wrap: anywhere;
+}
