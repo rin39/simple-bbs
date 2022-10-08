@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export interface IMessage {
   text: string;
-  thread: mongoose.Types.ObjectId;
+  thread?: mongoose.Types.ObjectId;
   createdAt: Date;
 }
 
@@ -11,7 +11,6 @@ const ThreadSchema = new mongoose.Schema<IMessage>({
   thread: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Thread",
-    required: true,
   },
   createdAt: { type: Date, required: true },
 });
