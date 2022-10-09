@@ -1,6 +1,22 @@
 @use 'common';
+@use 'variables';
 
 .main {
   @include common.flex-col;
   align-items: center;
+}
+
+.section {
+  width: 500px;
+}
+
+.thread-name {
+  text-align: center;
+  margin-bottom: 30px;
+  color: variables.$fg-alt;
+}
+
+.message-list {
+  @include common.flex-col($gap: 10px);
+  margin-bottom: 30px;
 }

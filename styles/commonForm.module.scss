@@ -8,7 +8,7 @@
   padding: 5px;
 }
 
-.new-thread-form {
+.form {
   @include common.flex-col($gap: 10px);
   margin-bottom: 30px;
 }
@@ -44,11 +44,11 @@
   }
 }
 
-.thread-name {
+.name {
   @extend %inputs-shared;
 }
 
-.first-message {
+.message {
   @extend %inputs-shared;
   resize: none;
   height: 100px;

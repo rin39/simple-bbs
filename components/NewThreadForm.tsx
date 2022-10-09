@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "../styles/NewThreadForm.module.scss";
+import styles from "../styles/commonForm.module.scss";
 import axios from "axios";
 import { BoardDocument } from "../services/boardService";
 import { useRouter } from "next/router";
@@ -59,13 +59,13 @@ export default function NewThreadForm({ board }: NewThreadFormProps) {
   };
 
   return (
-    <form className={styles["new-thread-form"]} onSubmit={handleSubmit}>
+    <form className={styles["form"]} onSubmit={handleSubmit}>
       <div className={styles["input-group"]}>
         <label htmlFor="new-thread-name" className={styles["label"]}>
           Thread Name
         </label>
         <input
-          className={styles["thread-name"]}
+          className={styles["name"]}
           id="new-thread-name"
           name="name"
           type="text"
@@ -78,7 +78,7 @@ export default function NewThreadForm({ board }: NewThreadFormProps) {
           Message
         </label>
         <textarea
-          className={styles["first-message"]}
+          className={styles["message"]}
           name="message"
           id="thread-first-message"
           value={formData.message}

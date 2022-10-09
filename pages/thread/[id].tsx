@@ -8,6 +8,8 @@ import {
 import { getThreadById, ThreadDocument } from "../../services/threadService";
 import styles from "../../styles/thread.module.scss";
 import Navigation from "../../components/Navigation";
+import MessageListItem from "../../components/MessageListItem";
+import NewMessageForm from "../../components/NewMessageForm";
 
 interface ThreadPageProps {
   messages: MessageDocument[];
@@ -21,9 +23,15 @@ const ThreadPage: NextPage<ThreadPageProps> = ({ messages, thread }) => {
       <Navigation
         additionalLinks={[{ href: `/board/${thread.board}`, text: "Back" }]}
       />
-      {messages.map((message) => (
-        <div key={message._id}>{message.text}</div> //TODO
-      ))}
+      <section className={styles.section}>
+        <h1 className={styles["thread-name"]}>{thread.name}</h1>
+        <ul className={styles["message-list"]}>
+          {messages.map((message, idx) => (
+            <MessageListItem key={message._id} message={message} idx={idx} />
+          ))}
+        </ul>
+        <NewMessageForm thread={thread} />
+      </section>
     </main>
   );
 };

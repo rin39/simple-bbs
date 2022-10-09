@@ -17,9 +17,19 @@ export async function getMessagesInThread(threadId: string) {
     const message: MessageDocument = {
       _id: doc._id.toString(),
       text: doc.text,
-      createdAt: doc.createdAt.toString(),
+      createdAt: doc.createdAt.toLocaleString(),
     };
     return message;
   });
   return messages;
+}
+
+export async function createMessage(threadId: string, message: string) {
+  await dbConnect();
+  const newMessage: HydratedDocument<IMessage> = new Message({
+    thread: threadId,
+    text: message,
+    createdAt: new Date(),
+  });
+  await newMessage.save();
 }

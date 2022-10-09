@@ -1,0 +1,18 @@
+@use 'common';
+@use 'variables';
+
+.message-list-item {
+  border: 1px solid;
+  padding: 10px;
+}
+
+.message-header {
+  @include common.flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  color: darken($color: variables.$fg, $amount: 10);
+}
+
+.message-text {
+  overflow-wrap: anywhere;
+}
