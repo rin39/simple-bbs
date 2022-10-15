@@ -1,5 +1,6 @@
 import { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import AppHead from "../../components/AppHead";
 import Navigation from "../../components/Navigation";
 import NewThreadForm from "../../components/NewThreadForm";
@@ -25,12 +26,36 @@ const BoardPage: NextPage<BoardPageProps> = ({
   pages,
   currentPage,
 }) => {
+  const [isNewThreadFormShown, setIsNewThreadFormShown] = useState(false);
+  useEffect(() => {
+    let isNewThreadFormShown = localStorage.getItem("isNewThreadFormShown");
+    setIsNewThreadFormShown(
+      isNewThreadFormShown === "true" || isNewThreadFormShown == null
+    );
+  }, []);
+
+  const toggleNewThreadForm = () => {
+    setIsNewThreadFormShown((prev) => {
+      localStorage.setItem("isNewThreadFormShown", !prev ? "true" : "false");
+      return !prev;
+    });
+  };
+
   return (
     <main className={styles.main}>
       <AppHead title={`${board.name} - Simple BBS`} />
       <Navigation />
       <section className={styles.section}>
-        <NewThreadForm board={board} />
+        {isNewThreadFormShown ? (
+          <NewThreadForm board={board} hideForm={toggleNewThreadForm} />
+        ) : (
+          <button
+            className={styles["create-new-thread-btn"]}
+            onClick={toggleNewThreadForm}
+          >
+            Create New Thread
+          </button>
+        )}
         <ul className={styles["thread-list"]}>
           {threads.map((thread) => (
             <ThreadListItem key={thread._id} thread={thread} />

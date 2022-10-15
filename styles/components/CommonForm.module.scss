@@ -8,6 +8,17 @@
   padding: 5px;
 }
 
+%buttons-shared {
+  background-color: variables.$bg-alt;
+  color: variables.$fg;
+  padding: 5px;
+  border: none;
+  &:hover {
+    cursor: pointer;
+    background-color: lighten($color: variables.$bg-alt, $amount: 5);
+  }
+}
+
 .form {
   @include common.flex-col($gap: 10px);
   margin-bottom: 30px;
@@ -33,15 +44,13 @@
 }
 
 .submit-btn {
+  @extend %buttons-shared;
   align-self: flex-start;
-  background-color: variables.$bg-alt;
-  color: variables.$fg;
-  padding: 5px;
-  border: none;
-  &:hover {
-    cursor: pointer;
-    background-color: lighten($color: variables.$bg-alt, $amount: 5);
-  }
+}
+
+.hide-btn {
+  @extend %buttons-shared;
+  align-self: center;
 }
 
 .name {

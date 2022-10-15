@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 
 interface NewThreadFormProps {
   board: BoardDocument;
+  hideForm: () => void;
 }
 
 const initialFormData = {
@@ -18,7 +19,7 @@ interface ApiResponse {
   id: string;
 }
 
-export default function NewThreadForm({ board }: NewThreadFormProps) {
+export default function NewThreadForm({ board, hideForm }: NewThreadFormProps) {
   const router = useRouter();
   const [formData, setFormData] = useState(initialFormData);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -60,6 +61,9 @@ export default function NewThreadForm({ board }: NewThreadFormProps) {
 
   return (
     <form className={styles["form"]} onSubmit={handleSubmit}>
+      <button className={styles["hide-btn"]} type="button" onClick={hideForm}>
+        Hide
+      </button>
       <div className={styles["input-group"]}>
         <label htmlFor="new-thread-name" className={styles["label"]}>
           Thread Name
