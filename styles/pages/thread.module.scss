@@ -20,3 +20,10 @@
   @include common.flex-col($gap: 10px);
   margin-bottom: 30px;
 }
+
+@media screen and (max-width: 600px) {
+  .section {
+    width: 100%;
+    padding: 0 20px;
+  }
+}

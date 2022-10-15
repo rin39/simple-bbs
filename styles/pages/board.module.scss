@@ -27,3 +27,14 @@
 .active-page {
   color: variables.$fg-alt;
 }
+
+@media screen and (max-width: 600px) {
+  .section {
+    width: 100%;
+    padding: 0 20px;
+  }
+  .pagination {
+    width: auto;
+    padding: 0 20px;
+  }
+}
