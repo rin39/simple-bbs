@@ -1,4 +1,5 @@
 @use '../common';
+@use '../variables';
 
 .main {
   @include common.flex-col;
@@ -12,4 +13,17 @@
 .thread-list {
   @include common.flex-col($gap: 10px);
   margin-bottom: 10px;
+}
+
+.pagination {
+  width: 500px;
+  @include common.flex($gap: 5px);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
+.active-page {
+  color: variables.$fg-alt;
 }

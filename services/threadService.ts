@@ -12,7 +12,18 @@ export interface ThreadDocument {
   firstMessage?: string;
 }
 
-export async function getThreadsInBoard(boardId: string) {
+export async function getNumberOfPagesInBoard(boardId: string) {
+  await dbConnect();
+  const res = await Thread.count({ board: boardId });
+
+  let pages = res / 10;
+  if (pages % 1 > 0) pages++;
+
+  return Math.trunc(pages);
+}
+
+export async function getThreadsInBoard(boardId: string, page: number) {
+  page--;
   await dbConnect();
   const res = await Thread.find<HydratedDocument<IThread>>({
     board: boardId,
@@ -21,7 +32,9 @@ export async function getThreadsInBoard(boardId: string) {
       path: "firstMessage",
       model: Message,
     })
-    .sort({ createdAt: -1 });
+    .sort({ createdAt: -1 })
+    .limit(10)
+    .skip(page * 10);
   const threads = res.map((doc) => {
     const thread: ThreadDocument = {
       _id: doc._id.toString(),
