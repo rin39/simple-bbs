@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "../styles/commonForm.module.scss";
+import styles from "../styles/components/CommonForm.module.scss";
 import axios from "axios";
 import { BoardDocument } from "../services/boardService";
 import { useRouter } from "next/router";

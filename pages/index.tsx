@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import AppHead from "../components/AppHead";
 import BoardList from "../components/BoardList";
 import { getBoards, BoardDocument } from "../services/boardService";
-import styles from "../styles/index.module.scss";
+import styles from "../styles/pages/index.module.scss";
 
 interface HomeProps {
   boards: BoardDocument[];

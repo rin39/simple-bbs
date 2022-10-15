@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { BoardDocument } from "../services/boardService";
-import styles from "../styles/BoardList.module.scss";
+import styles from "../styles/components/BoardList.module.scss";
 
 interface BoardsListProps {
   boards: BoardDocument[];

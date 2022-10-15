@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import styles from "../styles/Navigation.module.scss";
+import styles from "../styles/components/Navigation.module.scss";
 
 interface NavigationProps {
   additionalLinks?: {
@@ -12,7 +12,7 @@ interface NavigationProps {
 export default function Navigation({ additionalLinks }: NavigationProps) {
   return (
     <header className={styles.header}>
-      <nav className={styles.navigation}>
+      <nav>
         <ul className={styles["nav-list"]}>
           <li>
             <Link href="/">Home</Link>

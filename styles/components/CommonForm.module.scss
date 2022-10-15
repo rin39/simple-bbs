@@ -1,5 +1,5 @@
-@use 'variables';
-@use 'common';
+@use '../variables';
+@use '../common';
 
 %inputs-shared {
   border: none;
@@ -40,7 +40,7 @@
   border: none;
   &:hover {
     cursor: pointer;
-    background-color: variables.$bg-alt-lighter;
+    background-color: lighten($color: variables.$bg-alt, $amount: 5);
   }
 }
 

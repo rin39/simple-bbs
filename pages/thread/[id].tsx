@@ -1,12 +1,11 @@
 import { GetServerSideProps, NextPage } from "next";
-import Link from "next/link";
 import AppHead from "../../components/AppHead";
 import {
   getMessagesInThread,
   MessageDocument,
 } from "../../services/messageService";
 import { getThreadById, ThreadDocument } from "../../services/threadService";
-import styles from "../../styles/thread.module.scss";
+import styles from "../../styles/pages/thread.module.scss";
 import Navigation from "../../components/Navigation";
 import MessageListItem from "../../components/MessageListItem";
 import NewMessageForm from "../../components/NewMessageForm";

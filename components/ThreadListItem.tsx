@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import styles from "../styles/ThreadListItem.module.scss";
+import styles from "../styles/components/ThreadListItem.module.scss";
 import { ThreadDocument } from "../services/threadService";
 
 interface ThreadListItemsProps {
@@ -14,8 +14,8 @@ export default function ThreadListItem({ thread }: ThreadListItemsProps) {
   };
   return (
     <li className={styles["thread-list-item"]} onClick={handleClick}>
-      <div className={styles["head"]}>
-        <h1 className={styles["header"]}>
+      <div className={styles["header"]}>
+        <h1 className={styles["heading"]}>
           <Link href={`/thread/${thread._id}`}>{thread.name}</Link>
         </h1>
         <span>{thread.createdAt}</span>

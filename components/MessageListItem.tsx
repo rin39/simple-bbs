@@ -1,5 +1,5 @@
 import { MessageDocument } from "../services/messageService";
-import styles from "../styles/MessageListItem.module.scss";
+import styles from "../styles/components/MessageListItem.module.scss";
 
 interface MessageListItemProps {
   message: MessageDocument;

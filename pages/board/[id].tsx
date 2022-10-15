@@ -8,7 +8,7 @@ import {
   getThreadsInBoard,
   ThreadDocument,
 } from "../../services/threadService";
-import styles from "../../styles/board.module.scss";
+import styles from "../../styles/pages/board.module.scss";
 
 interface BoardPageProps {
   board: BoardDocument;

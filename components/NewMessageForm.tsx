@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { ThreadDocument } from "../services/threadService";
-import styles from "../styles/commonForm.module.scss";
+import styles from "../styles/components/CommonForm.module.scss";
 import { useRouter } from "next/router";
 
 interface NewMessageFormProps {
