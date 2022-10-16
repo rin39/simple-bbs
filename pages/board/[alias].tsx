@@ -2,9 +2,12 @@ import { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import AppHead from "../../components/AppHead";
+import Button from "../../components/Button";
+import Main from "../../components/Main";
 import Navigation from "../../components/Navigation";
 import NewThreadForm from "../../components/NewThreadForm";
-import ThreadListItem from "../../components/ThreadListItem";
+import Section from "../../components/Section";
+import List from "../../components/List";
 import { BoardDocument, getBoardByAlias } from "../../services/boardService";
 import {
   getNumberOfPagesInBoard,
@@ -12,6 +15,7 @@ import {
   ThreadDocument,
 } from "../../services/threadService";
 import styles from "../../styles/pages/board.module.scss";
+import BoardPagination from "../../components/BoardPagination";
 
 interface BoardPageProps {
   board: BoardDocument;
@@ -42,39 +46,30 @@ const BoardPage: NextPage<BoardPageProps> = ({
   };
 
   return (
-    <main className={styles.main}>
+    <>
       <AppHead title={`${board.name} - Simple BBS`} />
       <Navigation />
-      <section className={styles.section}>
-        {isNewThreadFormShown ? (
-          <NewThreadForm board={board} hideForm={toggleNewThreadForm} />
-        ) : (
-          <button
-            className={styles["create-new-thread-btn"]}
-            onClick={toggleNewThreadForm}
-          >
-            Create New Thread
-          </button>
-        )}
-        <ul className={styles["thread-list"]}>
-          {threads.map((thread) => (
-            <ThreadListItem key={thread._id} thread={thread} />
-          ))}
-        </ul>
-      </section>
-      <ul className={styles.pagination}>
-        {Array.from(Array(pages).keys()).map((page) => {
-          page++;
-          return (
-            <Link key={page} href={`/board/${board.alias}?page=${page}`}>
-              <a className={currentPage === page ? styles["active-page"] : ""}>
-                {page}
-              </a>
-            </Link>
-          );
-        })}
-      </ul>
-    </main>
+      <Main>
+        <Section>
+          {isNewThreadFormShown ? (
+            <NewThreadForm board={board} hideForm={toggleNewThreadForm} />
+          ) : (
+            <Button
+              className={styles["create-new-thread-btn"]}
+              onClick={toggleNewThreadForm}
+            >
+              Create New Thread
+            </Button>
+          )}
+          <List of={threads} />
+          <BoardPagination
+            pages={pages}
+            currentPage={currentPage}
+            boardAlias={board.alias}
+          />
+        </Section>
+      </Main>
+    </>
   );
 };
 

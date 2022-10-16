@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { ThreadDocument } from "../services/threadService";
 import styles from "../styles/components/CommonForm.module.scss";
 import { useRouter } from "next/router";
+import Button from "./Button";
 
 interface NewMessageFormProps {
   thread: ThreadDocument;
@@ -40,7 +41,7 @@ export default function NewMessageForm({ thread }: NewMessageFormProps) {
         />
       </div>
       <div className={styles["btn-group"]}>
-        <button className={styles["submit-btn"]}>Send</button>
+        <Button>Send</Button>
       </div>
     </form>
   );

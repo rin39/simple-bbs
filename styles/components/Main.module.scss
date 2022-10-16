@@ -1,0 +1,11 @@
+@use '../common';
+
+.main {
+  @include common.flex-col;
+  align-items: center;
+  justify-content: center;
+}
+
+.mh-100vh {
+  min-height: 100vh;
+}

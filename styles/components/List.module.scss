@@ -1,0 +1,15 @@
+@use '../common';
+
+.message-list {
+  @include common.flex-col($gap: 10px);
+  margin-bottom: 30px;
+}
+
+.thread-list {
+  @include common.flex-col($gap: 10px);
+  margin-bottom: 10px;
+}
+
+.board-list {
+  @include common.flex-col($gap: 15px);
+}

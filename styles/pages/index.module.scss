@@ -1,8 +1,6 @@
-@use '../common';
+@use '../variables';
 
-.main {
-  @include common.flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+.board-list-heading {
+  margin-bottom: 20px;
+  color: variables.$fg-alt;
 }

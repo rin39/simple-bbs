@@ -8,17 +8,6 @@
   padding: 5px;
 }
 
-%buttons-shared {
-  background-color: variables.$bg-alt;
-  color: variables.$fg;
-  padding: 5px;
-  border: none;
-  &:hover {
-    cursor: pointer;
-    background-color: lighten($color: variables.$bg-alt, $amount: 5);
-  }
-}
-
 .form {
   @include common.flex-col($gap: 10px);
   margin-bottom: 30px;
@@ -43,13 +32,7 @@
   justify-content: space-between;
 }
 
-.submit-btn {
-  @extend %buttons-shared;
-  align-self: flex-start;
-}
-
-.hide-btn {
-  @extend %buttons-shared;
+.hide-form-btn {
   align-self: center;
 }
 

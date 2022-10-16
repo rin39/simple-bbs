@@ -3,6 +3,7 @@ import styles from "../styles/components/CommonForm.module.scss";
 import axios from "axios";
 import { BoardDocument } from "../services/boardService";
 import { useRouter } from "next/router";
+import Button from "./Button";
 
 interface NewThreadFormProps {
   board: BoardDocument;
@@ -19,11 +20,17 @@ interface ApiResponse {
   id: string;
 }
 
+type formChangeEvent =
+  | React.ChangeEvent<HTMLInputElement>
+  | React.ChangeEvent<HTMLTextAreaElement>;
+
 export default function NewThreadForm({ board, hideForm }: NewThreadFormProps) {
   const router = useRouter();
+
   const [formData, setFormData] = useState(initialFormData);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [error, setError] = useState("");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsButtonDisabled(true);
@@ -48,10 +55,6 @@ export default function NewThreadForm({ board, hideForm }: NewThreadFormProps) {
     setIsButtonDisabled(false);
   };
 
-  type formChangeEvent =
-    | React.ChangeEvent<HTMLInputElement>
-    | React.ChangeEvent<HTMLTextAreaElement>;
-
   const handleFormDataChange = (e: formChangeEvent) => {
     setFormData((prev) => ({
       ...prev,
@@ -61,9 +64,13 @@ export default function NewThreadForm({ board, hideForm }: NewThreadFormProps) {
 
   return (
     <form className={styles["form"]} onSubmit={handleSubmit}>
-      <button className={styles["hide-btn"]} type="button" onClick={hideForm}>
+      <Button
+        className={styles["hide-form-btn"]}
+        type="button"
+        onClick={hideForm}
+      >
         Hide
-      </button>
+      </Button>
       <div className={styles["input-group"]}>
         <label htmlFor="new-thread-name" className={styles["label"]}>
           Thread Name
@@ -90,9 +97,7 @@ export default function NewThreadForm({ board, hideForm }: NewThreadFormProps) {
         ></textarea>
       </div>
       <div className={styles["btn-group"]}>
-        <button className={styles["submit-btn"]} disabled={isButtonDisabled}>
-          Create New Thread
-        </button>
+        <Button disabled={isButtonDisabled}>Create New Thread</Button>
         {error && <span className={styles.error}>{error}</span>}
       </div>
     </form>

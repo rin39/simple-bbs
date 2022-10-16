@@ -1,0 +1,14 @@
+@use '../common';
+@use '../variables';
+
+.pagination {
+  @include common.flex($gap: 5px);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.active-page {
+  color: variables.$fg-alt;
+}
