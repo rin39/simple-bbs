@@ -35,14 +35,14 @@ export default function NewThreadForm({ board, hideForm }: NewThreadFormProps) {
     e.preventDefault();
     setIsButtonDisabled(true);
     setError("");
-    if (!formData.message.trim() && !formData.name.trim()) {
+    if (!formData.message.trim() || !formData.name.trim()) {
       setIsButtonDisabled(false);
       return setError("Thread name and message should not be empty");
     }
     try {
       const res = await axios.post<ApiResponse>("/api/threads", {
-        name: formData.name,
-        message: formData.message,
+        name: formData.name.trim(),
+        message: formData.message.trim(),
         board: board._id,
       });
       if (res.status === 200) {
