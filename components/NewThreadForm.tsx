@@ -75,7 +75,7 @@ export default function NewThreadForm({ board, hideForm }: NewThreadFormProps) {
           Thread Name
         </label>
         <input
-          className={styles["name"]}
+          className={styles["input"]}
           id="new-thread-name"
           name="name"
           type="text"
