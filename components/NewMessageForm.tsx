@@ -4,6 +4,7 @@ import { ThreadDocument } from "../services/threadService";
 import styles from "../styles/components/CommonForm.module.scss";
 import { useRouter } from "next/router";
 import Button from "./Button";
+import { ResponseData as ApiResponse } from "../pages/api/messages";
 
 interface NewMessageFormProps {
   thread: ThreadDocument;
@@ -11,15 +12,36 @@ interface NewMessageFormProps {
 
 export default function NewMessageForm({ thread }: NewMessageFormProps) {
   const router = useRouter();
+
   const [message, setMessage] = useState("");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await axios.post("/api/messages", {
-      thread: thread._id,
-      message: message,
-    });
-    router.replace(router.asPath);
+    setIsButtonDisabled(true);
+    setError("");
+    if (!message.trim()) {
+      setIsButtonDisabled(false);
+      return setError("Message should not be empty");
+    }
+    try {
+      const res = await axios.post<ApiResponse>("/api/messages", {
+        thread: thread._id,
+        message: message,
+      });
+      if (res.status === 200) {
+        setMessage("");
+        router.replace(router.asPath);
+      }
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        return setError(e.response?.data.message);
+      }
+      setError("Failed to create new message");
+    } finally {
+      setIsButtonDisabled(false);
+    }
   };
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -41,7 +63,8 @@ export default function NewMessageForm({ thread }: NewMessageFormProps) {
         />
       </div>
       <div className={styles["btn-group"]}>
-        <Button>Send</Button>
+        <Button disabled={isButtonDisabled}>Send</Button>
+        {error && <span className={styles.error}>{error}</span>}
       </div>
     </form>
   );

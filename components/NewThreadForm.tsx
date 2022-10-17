@@ -4,6 +4,7 @@ import axios from "axios";
 import { BoardDocument } from "../services/boardService";
 import { useRouter } from "next/router";
 import Button from "./Button";
+import { ResponseData as ApiResponse } from "../pages/api/threads";
 
 interface NewThreadFormProps {
   board: BoardDocument;
@@ -14,11 +15,6 @@ const initialFormData = {
   name: "",
   message: "",
 };
-
-interface ApiResponse {
-  result: string;
-  id: string;
-}
 
 type formChangeEvent =
   | React.ChangeEvent<HTMLInputElement>
@@ -49,10 +45,13 @@ export default function NewThreadForm({ board, hideForm }: NewThreadFormProps) {
         setFormData(initialFormData);
         router.replace(`/thread/${res.data.id}`);
       }
-    } catch {
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        return setError(e.response?.data.message);
+      }
       setError("Failed to create new thread");
+      setIsButtonDisabled(false);
     }
-    setIsButtonDisabled(false);
   };
 
   const handleFormDataChange = (e: formChangeEvent) => {
