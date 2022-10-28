@@ -31,19 +31,7 @@ const BoardPage: NextPage<BoardPageProps> = ({
   currentPage,
 }) => {
   const [isNewThreadFormShown, setIsNewThreadFormShown] = useState(false);
-  useEffect(() => {
-    let isNewThreadFormShown = localStorage.getItem("isNewThreadFormShown");
-    setIsNewThreadFormShown(
-      isNewThreadFormShown === "true" || isNewThreadFormShown == null
-    );
-  }, []);
-
-  const toggleNewThreadForm = () => {
-    setIsNewThreadFormShown((prev) => {
-      localStorage.setItem("isNewThreadFormShown", !prev ? "true" : "false");
-      return !prev;
-    });
-  };
+  const toggleNewThreadForm = () => setIsNewThreadFormShown((prev) => !prev);
 
   return (
     <>
