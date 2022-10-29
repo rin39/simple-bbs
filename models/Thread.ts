@@ -8,13 +8,21 @@ export interface IThread {
 }
 
 const ThreadSchema = new mongoose.Schema<IThread>({
-  name: { type: String, required: true },
-  board: { type: mongoose.Schema.Types.ObjectId, ref: "Board", required: true },
-  createdAt: { type: Date, required: true },
+  name: {
+    type: String,
+    required: [true, "name is required"],
+    maxLength: [100, "name cannot be longer than 100 characters"],
+  },
+  board: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Board",
+    required: [true, "board is required"],
+  },
+  createdAt: { type: Date, required: [true, "createdAt is required"] },
   firstMessage: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Message",
-    required: true,
+    required: [true, "firstMessage is required"],
   },
 });
 

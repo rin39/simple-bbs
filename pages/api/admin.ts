@@ -29,6 +29,8 @@ export default async function handler(
       break;
 
     case "GET":
+      // TODO
+      res.status(404).send(null);
       break;
 
     default:

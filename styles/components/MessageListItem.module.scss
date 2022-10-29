@@ -10,7 +10,7 @@
   @include common.flex;
   justify-content: space-between;
   margin-bottom: 10px;
-  color: darken($color: variables.$fg, $amount: 10);
+  color: darken(variables.$fg, 10);
 }
 
 .message-text {

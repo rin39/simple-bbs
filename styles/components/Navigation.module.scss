@@ -5,6 +5,6 @@
 }
 
 .nav-list {
-  @include common.flex($gap: 10px);
+  @include common.flex(10px);
   justify-content: center;
 }

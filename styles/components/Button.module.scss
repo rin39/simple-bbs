@@ -7,6 +7,6 @@
   border: none;
   &:hover {
     cursor: pointer;
-    background-color: lighten($color: variables.$bg-alt, $amount: 5);
+    background-color: lighten(variables.$bg-alt, 5);
   }
 }

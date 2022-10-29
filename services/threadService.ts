@@ -3,6 +3,7 @@ import dbConnect from "../lib/dbConnect";
 import Thread, { IThread } from "../models/Thread";
 import Message, { IMessage } from "../models/Message";
 import Board, { IBoard } from "../models/Board";
+import { DateTime } from "luxon";
 
 export interface ThreadDocument {
   _id: string;
@@ -25,6 +26,7 @@ export async function getNumberOfPagesInBoard(boardId: string) {
 export async function getThreadsInBoard(boardId: string, page: number) {
   page--;
   await dbConnect();
+
   const res = await Thread.find<HydratedDocument<IThread>>({
     board: boardId,
   })
@@ -35,13 +37,23 @@ export async function getThreadsInBoard(boardId: string, page: number) {
     .sort({ createdAt: -1 })
     .limit(10)
     .skip(page * 10);
+
   const threads = res.map((doc) => {
+    let firstMessage = doc.firstMessage.text;
+    // Make first message shorter
+    if (firstMessage.length > 800)
+      firstMessage = firstMessage.slice(0, 800) + "...";
+
+    const createdAt = DateTime.fromJSDate(doc.createdAt).toLocaleString(
+      DateTime.DATETIME_SHORT
+    );
+
     const thread: ThreadDocument = {
       _id: doc._id.toString(),
       name: doc.name,
       board: doc.board.toString(),
-      createdAt: doc.createdAt.toLocaleString(),
-      firstMessage: doc.firstMessage.text,
+      createdAt,
+      firstMessage,
     };
     return thread;
   });
@@ -69,6 +81,7 @@ export async function getThreadById(id: string) {
   }
 }
 
+// TODO: find a better way to do it
 export async function createThread(name: string, text: string, board: string) {
   await dbConnect();
   const createdAt = new Date();

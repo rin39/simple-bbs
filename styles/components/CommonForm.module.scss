@@ -9,12 +9,12 @@
 }
 
 .form {
-  @include common.flex-col($gap: 10px);
+  @include common.flex-col(10px);
   margin-bottom: 30px;
 }
 
 .form-centered {
-  @include common.flex-col($gap: 10px);
+  @include common.flex-col(10px);
   align-items: center;
 }
 
@@ -33,12 +33,12 @@
   color: variables.$error-fg;
 }
 
-.input-group {
+.vertical-group {
   @include common.flex-col;
 }
 
-.btn-group {
-  @include common.flex($gap: 20px);
+.horizontal-group {
+  @include common.flex(20px);
   align-items: center;
   justify-content: space-between;
 }
@@ -53,6 +53,6 @@
 
 .message {
   @extend %inputs-shared;
-  resize: none;
+  resize: vertical;
   height: 100px;
 }

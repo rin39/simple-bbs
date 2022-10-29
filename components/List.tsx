@@ -14,6 +14,7 @@ interface ListProps {
 /**
  * List of messages, threads or boards
  */
+// TODO: find a better way to do it
 export default function List({ of }: ListProps) {
   if (of.length === 0) return null;
   if ((of[0] as BoardDocument).alias !== undefined) {

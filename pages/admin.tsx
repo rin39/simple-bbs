@@ -14,6 +14,7 @@ interface AdminProps {
 }
 
 const Admin: NextPage<AdminProps> = ({ isAdminExists, isLoggedIn }) => {
+  // Content to be rendered inside Main component
   let mainContent;
   if (isLoggedIn) {
     mainContent = <div>Logged In</div>;

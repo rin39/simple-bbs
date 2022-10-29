@@ -65,6 +65,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const boardAlias = context.params?.alias as string;
   const pageQuery = context.query?.page as string;
 
+  // Get current page
+  // if no page query param provided or query param is negative
+  // consider current page to be first
   let page = parseInt(pageQuery);
   if (!page || page <= 0) page = 1;
 
@@ -72,6 +75,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (!board) return { notFound: true };
 
   const pages = await getNumberOfPagesInBoard(board._id);
+  // When trying to access page which does not exist
+  // consider current page to be first
   if (page > pages) page = 1;
   const threads = await getThreadsInBoard(board._id, page);
 

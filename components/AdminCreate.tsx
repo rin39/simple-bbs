@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/components/CommonForm.module.scss";
 import Button from "./Button";
 import { ResponseData as ApiResponse } from "../pages/api/admin";
@@ -16,16 +16,31 @@ export default function AdminCreate() {
   const [passwordPair, setPasswordPair] = useState(passwordPairInitialState);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [error, setError] = useState("");
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  // Focus password input on mount
+  useEffect(() => {
+    passwordRef.current?.focus();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    setIsButtonDisabled(true);
+
+    // Validate fields
+    if (!passwordPair.password) {
+      passwordRef.current?.focus();
+      return setError("Password cannot be empty");
+    }
     if (passwordPair.password !== passwordPair.confirmPassword) {
       setPasswordPair(passwordPairInitialState);
-      setIsButtonDisabled(false);
+      passwordRef.current?.focus();
       return setError("Passwords do not match");
     }
+
+    setIsButtonDisabled(true);
+
+    // Post data
     try {
       await axios.post<ApiResponse>("/api/admin", {
         password: passwordPair.password,
@@ -55,7 +70,7 @@ export default function AdminCreate() {
         No admin password found. Create a new one.
       </h1>
       <form onSubmit={handleSubmit} className={styles["form-centered"]}>
-        <div className={styles["input-group"]}>
+        <div className={styles["vertical-group"]}>
           <label className={styles.label} htmlFor="password">
             Password
           </label>
@@ -66,9 +81,10 @@ export default function AdminCreate() {
             className={styles.input}
             value={passwordPair.password}
             onChange={handleChange}
+            ref={passwordRef}
           />
         </div>
-        <div className={styles["input-group"]}>
+        <div className={styles["vertical-group"]}>
           <label className={styles.label} htmlFor="password-confirm">
             Confirm Password
           </label>

@@ -17,23 +17,30 @@ export default function NewMessageForm({ thread }: NewMessageFormProps) {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [error, setError] = useState("");
 
+  const messageLength = message.trim().length;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsButtonDisabled(true);
     setError("");
-    if (!message.trim()) {
-      setIsButtonDisabled(false);
+
+    // Validate fields
+    if (!messageLength) {
       return setError("Message should not be empty");
     }
+    if (messageLength > 2000) {
+      return setError("Message is too long (2000 characters max)");
+    }
+
+    setIsButtonDisabled(true);
+
+    // Post data
     try {
-      const res = await axios.post<ApiResponse>("/api/messages", {
+      await axios.post<ApiResponse>("/api/messages", {
         thread: thread._id,
-        message: message,
+        message: message.trim(),
       });
-      if (res.status === 200) {
-        setMessage("");
-        router.replace(router.asPath);
-      }
+      setMessage("");
+      router.replace(router.asPath);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         setError(e.response?.data.message);
@@ -50,10 +57,15 @@ export default function NewMessageForm({ thread }: NewMessageFormProps) {
 
   return (
     <form className={styles["form"]} onSubmit={handleSubmit}>
-      <div className={styles["input-group"]}>
-        <label htmlFor="message" className={styles["label"]}>
-          Message
-        </label>
+      <div className={styles["vertical-group"]}>
+        <div className={styles["horizontal-group"]}>
+          <label htmlFor="message" className={styles["label"]}>
+            Message
+          </label>
+          <span className={messageLength > 2000 ? styles.error : ""}>
+            {messageLength}/2000
+          </span>
+        </div>
         <textarea
           className={styles["message"]}
           name="message"
@@ -62,7 +74,7 @@ export default function NewMessageForm({ thread }: NewMessageFormProps) {
           onChange={handleTextareaChange}
         />
       </div>
-      <div className={styles["btn-group"]}>
+      <div className={styles["horizontal-group"]}>
         <Button disabled={isButtonDisabled}>Send</Button>
         {error && <span className={styles.error}>{error}</span>}
       </div>

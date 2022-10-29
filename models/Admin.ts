@@ -5,7 +5,7 @@ export interface IAdmin {
 }
 
 const AdminSchema = new mongoose.Schema<IAdmin>({
-  password: { type: String, required: true },
+  password: { type: String, required: [true, "password is required"] },
 });
 
 export default mongoose.models.Admin ||

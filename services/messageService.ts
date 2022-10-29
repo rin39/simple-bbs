@@ -1,4 +1,4 @@
-import mongoose, { HydratedDocument } from "mongoose";
+import { HydratedDocument } from "mongoose";
 import dbConnect from "../lib/dbConnect";
 import Message, { IMessage } from "../models/Message";
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/components/CommonForm.module.scss";
 import Button from "./Button";
 import { useRouter } from "next/router";
@@ -11,12 +11,26 @@ export default function AdminLogin() {
   const [password, setPassword] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [error, setError] = useState("");
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  // Focus password input on mount
+  useEffect(() => {
+    passwordRef.current?.focus();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    if (!password) return setError("Please enter the password");
+
+    // Validate fields
+    if (!password) {
+      passwordRef.current?.focus();
+      return setError("Please enter the password");
+    }
+
     setIsButtonDisabled(true);
+
+    // Post data
     try {
       await axios.post<ApiResponse>("/api/login", {
         password,
@@ -30,6 +44,7 @@ export default function AdminLogin() {
       }
       setPassword("");
       setIsButtonDisabled(false);
+      passwordRef.current?.focus();
     }
   };
 
@@ -44,6 +59,7 @@ export default function AdminLogin() {
           className={styles.input}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          ref={passwordRef}
         />
         <Button disabled={isButtonDisabled}>Login</Button>
         {error && <span className={styles.error}>{error}</span>}

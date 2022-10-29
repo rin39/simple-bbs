@@ -14,12 +14,10 @@ export default function ThreadListItem({ thread }: ThreadListItemsProps) {
   };
   return (
     <li className={styles["thread-list-item"]} onClick={handleClick}>
-      <div className={styles["header"]}>
-        <h1 className={styles["heading"]}>
-          <Link href={`/thread/${thread._id}`}>{thread.name}</Link>
-        </h1>
-        <span>{thread.createdAt}</span>
-      </div>
+      <h1 className={styles["heading"]}>
+        <Link href={`/thread/${thread._id}`}>{thread.name}</Link>
+      </h1>
+      <div className={styles["created-at"]}>{thread.createdAt}</div>
       <p className={styles["first-message"]}>{thread.firstMessage}</p>
     </li>
   );
