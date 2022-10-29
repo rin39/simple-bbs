@@ -1,25 +1,48 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import React from "react";
 import AppHead from "../components/AppHead";
 import Main from "../components/Main";
-import styles from "../styles/components/CommonForm.module.scss";
+import { getAdmin } from "../services/adminService";
+import AdminLogin from "../components/AdminLogin";
+import AdminCreate from "../components/AdminCreate";
+import { withIronSessionSsr } from "iron-session/next";
+import { sessionOptions } from "../lib/session";
 
-const Admin: NextPage = () => {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
+interface AdminProps {
+  isAdminExists: boolean;
+  isLoggedIn: boolean;
+}
+
+const Admin: NextPage<AdminProps> = ({ isAdminExists, isLoggedIn }) => {
+  let mainContent;
+  if (isLoggedIn) {
+    mainContent = <div>Logged In</div>;
+  } else {
+    mainContent = isAdminExists ? <AdminLogin /> : <AdminCreate />;
+  }
 
   return (
     <>
       <AppHead title="Admin - Simple BBS" />
 
-      <Main isIndexPage>
-        <form onSubmit={handleSubmit}>
-          <input name="password" type="text" className={styles.input} />
-        </form>
-      </Main>
+      <Main isIndexPage>{mainContent}</Main>
     </>
   );
 };
+
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps({ req }) {
+    let isLoggedIn = false;
+    const isAdminExists = Boolean(await getAdmin());
+
+    const user = req.session.user;
+    if (user) isLoggedIn = true;
+
+    return {
+      props: { isAdminExists, isLoggedIn },
+    };
+  },
+  sessionOptions
+);
 
 export default Admin;
