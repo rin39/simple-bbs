@@ -47,9 +47,10 @@ export default function NewThreadForm({ board, hideForm }: NewThreadFormProps) {
       }
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        return setError(e.response?.data.message);
+        setError(e.response?.data.message);
+      } else {
+        setError("Failed to create new thread");
       }
-      setError("Failed to create new thread");
       setIsButtonDisabled(false);
     }
   };
