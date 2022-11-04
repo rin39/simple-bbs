@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { isStringArray } from "../../lib/utils";
-import { createThread } from "../../services/threadService";
+import { isStringArray } from "../../../lib/utils";
+import { createThread, deleteThread } from "../../../services/threadService";
 
 export type ResponseData = {
   message: string;
@@ -11,6 +11,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData | null>
 ) {
+  // Only allow POST method
   if (req.method !== "POST") return res.status(404).send(null);
 
   if (!isStringArray([req.body.name, req.body.message, req.body.board])) {
@@ -26,9 +27,10 @@ export default async function handler(
       req.body.message.trim(),
       req.body.board.trim()
     );
-    res
-      .status(200)
-      .json({ message: "Successfully created new thread", id: newThreadId });
+    res.status(200).json({
+      message: "Successfully created new thread",
+      id: newThreadId,
+    });
   } catch {
     res.status(500).json({ message: "Failed to create new thread" });
   }

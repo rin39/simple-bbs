@@ -4,7 +4,7 @@ import axios from "axios";
 import { BoardDocument } from "../services/boardService";
 import { useRouter } from "next/router";
 import Button from "./Button";
-import { ResponseData as ApiResponse } from "../pages/api/threads";
+import { ResponseData as ApiResponse } from "../pages/api/threads/index";
 
 interface NewThreadFormProps {
   board: BoardDocument;

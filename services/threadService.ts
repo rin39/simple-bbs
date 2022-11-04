@@ -108,3 +108,17 @@ export async function createThread(name: string, text: string, board: string) {
 
   return thread._id.toString();
 }
+
+export async function deleteThread(threadId: string) {
+  await dbConnect();
+
+  const thread = await Thread.findByIdAndDelete<HydratedDocument<IThread>>(
+    threadId
+  );
+
+  if (!thread) throw new Error("Thread does not exist");
+
+  await Message.deleteMany({
+    thread: threadId,
+  });
+}

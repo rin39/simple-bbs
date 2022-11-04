@@ -1,4 +1,4 @@
-import { GetServerSideProps, NextPage } from "next";
+import { NextPage } from "next";
 import AppHead from "../../components/AppHead";
 import {
   getMessagesInThread,
@@ -11,13 +11,24 @@ import NewMessageForm from "../../components/NewMessageForm";
 import Main from "../../components/Main";
 import Section from "../../components/Section";
 import List from "../../components/List";
+import { withIronSessionSsr } from "iron-session/next";
+import { sessionOptions } from "../../lib/session";
+import Button from "../../components/Button";
+import useAdminUtils from "../../hooks/useAdminUtils";
 
 interface ThreadPageProps {
   messages: MessageDocument[];
   thread: ThreadDocument;
+  isLoggedIn: boolean;
 }
 
-const ThreadPage: NextPage<ThreadPageProps> = ({ messages, thread }) => {
+const ThreadPage: NextPage<ThreadPageProps> = ({
+  messages,
+  thread,
+  isLoggedIn,
+}) => {
+  const { deleteThread } = useAdminUtils();
+
   return (
     <>
       <AppHead title={`${thread.name} - Simple BBS`} />
@@ -27,6 +38,14 @@ const ThreadPage: NextPage<ThreadPageProps> = ({ messages, thread }) => {
       <Main>
         <Section>
           <h1 className={styles["thread-name"]}>{thread.name}</h1>
+          {isLoggedIn && (
+            <Button
+              onClick={() => deleteThread(thread._id)}
+              className={styles["delete-thread-btn"]}
+            >
+              Delete Thread
+            </Button>
+          )}
           <List of={messages} />
           <NewMessageForm thread={thread} />
         </Section>
@@ -35,14 +54,23 @@ const ThreadPage: NextPage<ThreadPageProps> = ({ messages, thread }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const threadId = context.params?.id as string;
-  const thread = await getThreadById(threadId);
-  if (!thread) return { notFound: true };
-  const messages = await getMessagesInThread(threadId);
-  return {
-    props: { messages, thread },
-  };
-};
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps({ req, params }) {
+    const threadId = params?.id as string;
+    const thread = await getThreadById(threadId);
+    if (!thread) return { notFound: true };
+    const messages = await getMessagesInThread(threadId);
+
+    // Check login status
+    let isLoggedIn = false;
+    const user = req.session.user;
+    if (user) isLoggedIn = true;
+
+    return {
+      props: { messages, thread, isLoggedIn },
+    };
+  },
+  sessionOptions
+);
 
 export default ThreadPage;
