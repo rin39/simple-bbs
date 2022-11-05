@@ -2,8 +2,8 @@
 @use '../variables';
 
 .message-list-item {
-  border: 1px solid;
-  padding: 10px;
+  padding: 20px;
+  background-color: lighten(variables.$bg, 3);
 }
 
 .message-header {
