@@ -4,6 +4,11 @@ import Thread, { IThread } from "../models/Thread";
 import Message, { IMessage } from "../models/Message";
 import Board, { IBoard } from "../models/Board";
 import { DateTime } from "luxon";
+import {
+  getLastMessagesInThread,
+  getMessagesInThread,
+  MessageDocument,
+} from "./messageService";
 
 export interface ThreadDocument {
   _id: string;
@@ -11,6 +16,7 @@ export interface ThreadDocument {
   board?: string;
   createdAt?: string;
   firstMessage?: string;
+  lastMessages?: MessageDocument[];
 }
 
 export async function getNumberOfPagesInBoard(boardId: string) {
@@ -30,7 +36,7 @@ export async function getThreadsInBoard(boardId: string, page: number) {
   const res = await Thread.find<HydratedDocument<IThread>>({
     board: boardId,
   })
-    .populate<{ firstMessage: IMessage }>({
+    .populate<{ firstMessage: HydratedDocument<IMessage> }>({
       path: "firstMessage",
       model: Message,
     })
@@ -38,25 +44,33 @@ export async function getThreadsInBoard(boardId: string, page: number) {
     .limit(10)
     .skip(page * 10);
 
-  const threads = res.map((doc) => {
-    let firstMessage = doc.firstMessage.text;
-    // Make first message shorter
-    if (firstMessage.length > 800)
-      firstMessage = firstMessage.slice(0, 800) + "...";
+  const threads = await Promise.all(
+    res.map(async (doc) => {
+      let firstMessage = doc.firstMessage.text;
+      // Make first message shorter
+      if (firstMessage.length > 800)
+        firstMessage = firstMessage.slice(0, 800) + "...";
 
-    const createdAt = DateTime.fromJSDate(doc.createdAt).toLocaleString(
-      DateTime.DATETIME_SHORT
-    );
+      const createdAt = DateTime.fromJSDate(doc.createdAt).toLocaleString(
+        DateTime.DATETIME_SHORT
+      );
 
-    const thread: ThreadDocument = {
-      _id: doc._id.toString(),
-      name: doc.name,
-      board: doc.board.toString(),
-      createdAt,
-      firstMessage,
-    };
-    return thread;
-  });
+      const lastMessages = await getLastMessagesInThread(
+        doc._id.toString(),
+        doc.firstMessage._id.toString()
+      );
+
+      const thread: ThreadDocument = {
+        _id: doc._id.toString(),
+        name: doc.name,
+        board: doc.board.toString(),
+        createdAt,
+        firstMessage,
+        lastMessages: lastMessages.reverse(),
+      };
+      return thread;
+    })
+  );
   return threads;
 }
 

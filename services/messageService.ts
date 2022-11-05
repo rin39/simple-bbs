@@ -10,6 +10,7 @@ export interface MessageDocument {
 
 export async function getMessagesInThread(threadId: string) {
   await dbConnect();
+
   const res = await Message.find<HydratedDocument<IMessage>>({
     thread: threadId,
   });
@@ -21,15 +22,42 @@ export async function getMessagesInThread(threadId: string) {
     };
     return message;
   });
+
+  return messages;
+}
+
+export async function getLastMessagesInThread(
+  threadId: string,
+  firstMessageId: string
+) {
+  await dbConnect();
+
+  const res = await Message.find<HydratedDocument<IMessage>>({
+    thread: threadId,
+    _id: { $ne: firstMessageId },
+  })
+    .sort({ createdAt: -1 })
+    .limit(3);
+  const messages = res.map((doc) => {
+    const message: MessageDocument = {
+      _id: doc._id.toString(),
+      text: doc.text,
+      createdAt: doc.createdAt.toLocaleString(),
+    };
+    return message;
+  });
+
   return messages;
 }
 
 export async function createMessage(threadId: string, message: string) {
   await dbConnect();
+
   const newMessage: HydratedDocument<IMessage> = new Message({
     thread: threadId,
     text: message,
     createdAt: new Date(),
   });
+
   await newMessage.save();
 }

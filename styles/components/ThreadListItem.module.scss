@@ -24,6 +24,10 @@
   color: darken(variables.$fg, 10);
 }
 
-.first-message {
+.message {
   overflow-wrap: anywhere;
+}
+
+.message-separator {
+  margin: 10px 0;
 }

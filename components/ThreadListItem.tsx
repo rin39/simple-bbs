@@ -18,7 +18,13 @@ export default function ThreadListItem({ thread }: ThreadListItemsProps) {
         <Link href={`/thread/${thread._id}`}>{thread.name}</Link>
       </h1>
       <div className={styles["created-at"]}>{thread.createdAt}</div>
-      <p className={styles["first-message"]}>{thread.firstMessage}</p>
+      <p className={styles["message"]}>{thread.firstMessage}</p>
+      {thread.lastMessages?.map((message) => (
+        <div key={message._id}>
+          <hr className={styles["message-separator"]} />
+          <p className={styles["message"]}>{message.text}</p>
+        </div>
+      ))}
     </li>
   );
 }
