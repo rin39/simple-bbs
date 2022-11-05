@@ -6,11 +6,12 @@
 }
 
 .thread-list-item {
-  padding: 10px;
-  border: 1px solid;
+  padding: 20px;
+  background-color: lighten(variables.$bg, 3);
+  transition: .5s;
   &:hover {
     cursor: pointer;
-    background-color: lighten(variables.$bg, 5);
+    background-color: lighten(variables.$bg, 7);
   }
 }
 
