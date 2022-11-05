@@ -9,6 +9,7 @@ import {
   getMessagesInThread,
   MessageDocument,
 } from "./messageService";
+import { truncateString } from "../lib/utils";
 
 export interface ThreadDocument {
   _id: string;
@@ -46,10 +47,7 @@ export async function getThreadsInBoard(boardId: string, page: number) {
 
   const threads = await Promise.all(
     res.map(async (doc) => {
-      let firstMessage = doc.firstMessage.text;
-      // Make first message shorter
-      if (firstMessage.length > 800)
-        firstMessage = firstMessage.slice(0, 800) + "...";
+      const firstMessage = truncateString(doc.firstMessage.text, 800);
 
       const createdAt = DateTime.fromJSDate(doc.createdAt).toLocaleString(
         DateTime.DATETIME_SHORT

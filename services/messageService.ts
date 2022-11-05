@@ -1,6 +1,7 @@
 import { HydratedDocument } from "mongoose";
 import dbConnect from "../lib/dbConnect";
 import Message, { IMessage } from "../models/Message";
+import { truncateString } from "../lib/utils";
 
 export interface MessageDocument {
   _id: string;
@@ -38,10 +39,13 @@ export async function getLastMessagesInThread(
   })
     .sort({ createdAt: -1 })
     .limit(3);
+
   const messages = res.map((doc) => {
+    const text = truncateString(doc.text, 800);
+
     const message: MessageDocument = {
       _id: doc._id.toString(),
-      text: doc.text,
+      text,
       createdAt: doc.createdAt.toLocaleString(),
     };
     return message;
