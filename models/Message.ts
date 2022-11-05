@@ -4,6 +4,7 @@ export interface IMessage {
   text: string;
   thread?: mongoose.Types.ObjectId;
   createdAt: Date;
+  number: number;
 }
 
 const ThreadSchema = new mongoose.Schema<IMessage>({
@@ -17,6 +18,7 @@ const ThreadSchema = new mongoose.Schema<IMessage>({
     ref: "Thread",
   },
   createdAt: { type: Date, required: [true, "createdAt is required"] },
+  number: { type: Number, required: [true, "number is required"] },
 });
 
 export default mongoose.models.Message ||

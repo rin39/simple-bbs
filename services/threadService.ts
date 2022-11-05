@@ -101,6 +101,7 @@ export async function createThread(name: string, text: string, board: string) {
   const firstMessage: HydratedDocument<IMessage> = new Message({
     text,
     createdAt,
+    number: 0,
   });
   await firstMessage.save();
 

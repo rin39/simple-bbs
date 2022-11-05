@@ -3,22 +3,20 @@ import styles from "../styles/components/MessageListItem.module.scss";
 
 interface MessageListItemProps {
   message: MessageDocument;
-  idx: number;
+  className: string;
 }
 
 export default function MessageListItem({
   message,
-  idx,
+  className,
 }: MessageListItemProps) {
   return (
-    <li>
-      <div key={message._id} className={styles["message-list-item"]}>
-        <div className={styles["message-header"]}>
-          <span>#{idx}</span>
-          <span>{message.createdAt}</span>
-        </div>
-        <p className={styles["message-text"]}>{message.text}</p>
+    <li className={className || styles["message-list-item"]}>
+      <div className={styles["message-header"]}>
+        <span>#{message.number}</span>
+        <span>{message.createdAt}</span>
       </div>
+      <p className={styles["message-text"]}>{message.text}</p>
     </li>
   );
 }
