@@ -47,8 +47,8 @@ export default function NewMessageForm({ thread }: NewMessageFormProps) {
       } else {
         setError("Failed to create new message");
       }
-      setIsButtonDisabled(false);
     }
+    setIsButtonDisabled(false);
   };
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

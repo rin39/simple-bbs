@@ -68,8 +68,8 @@ export default function NewThreadForm({ board, hideForm }: NewThreadFormProps) {
       } else {
         setError("Failed to create new thread");
       }
-      setIsButtonDisabled(false);
     }
+    setIsButtonDisabled(false);
   };
 
   const handleFormDataChange = (e: formChangeEvent) => {
