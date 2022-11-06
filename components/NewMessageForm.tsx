@@ -40,7 +40,7 @@ export default function NewMessageForm({ thread }: NewMessageFormProps) {
         message: message.trim(),
       });
       setMessage("");
-      router.replace(router.asPath);
+      router.replace(router.asPath, undefined, { scroll: false });
     } catch (e) {
       if (axios.isAxiosError(e)) {
         setError(e.response?.data.message);
