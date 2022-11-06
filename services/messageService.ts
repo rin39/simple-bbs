@@ -85,3 +85,13 @@ export async function createMessage(threadId: string, message: string) {
 
   await newMessage.save();
 }
+
+export async function deleteMessage(messageId: string) {
+  await dbConnect();
+
+  const message = await Message.findByIdAndDelete<HydratedDocument<IMessage>>(
+    messageId
+  );
+
+  if (!message) throw new Error("Message does not exist");
+}

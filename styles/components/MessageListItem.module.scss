@@ -9,8 +9,14 @@
 .message-header {
   @include common.flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
   color: darken(variables.$fg, 10);
+}
+
+.message-header_left-group {
+  @include common.flex(10px);
+  align-items: center;
 }
 
 .message-text {

@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { isStringArray } from "../../../lib/utils";
-import { createThread, deleteThread } from "../../../services/threadService";
+import { createMessage } from "../../../services/messageService";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "../../../lib/session";
+import { deleteMessage } from "../../../services/messageService";
 
 export type ResponseData = {
   message: string;
-  id?: string;
 };
 
 export default withIronSessionApiRoute(async function handler(
@@ -23,10 +23,10 @@ export default withIronSessionApiRoute(async function handler(
     return res.status(500).json({ message: "Id should be of string type" });
 
   try {
-    await deleteThread(req.query.id);
-    res.status(200).json({ message: "Successfully deleted thread" });
-  } catch (e) {
-    res.status(500).json({ message: "Failed to delete thread" });
+    await deleteMessage(req.query.id);
+    res.status(200).json({ message: "Successfully deleted message" });
+  } catch {
+    res.status(500).json({ message: "Failed to delete message" });
   }
 },
 sessionOptions);
