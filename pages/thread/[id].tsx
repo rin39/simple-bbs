@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import AppHead from "../../components/AppHead";
 import {
   getMessagesInThread,
@@ -11,23 +11,19 @@ import NewMessageForm from "../../components/NewMessageForm";
 import Main from "../../components/Main";
 import Section from "../../components/Section";
 import List from "../../components/List";
-import { withIronSessionSsr } from "iron-session/next";
-import { sessionOptions } from "../../lib/session";
 import Button from "../../components/Button";
 import useAdminUtils from "../../hooks/useAdminUtils";
+import { useContext } from "react";
+import UserContext from "../../context/UserContext";
 
 interface ThreadPageProps {
   messages: MessageDocument[];
   thread: ThreadDocument;
-  isLoggedIn: boolean;
 }
 
-const ThreadPage: NextPage<ThreadPageProps> = ({
-  messages,
-  thread,
-  isLoggedIn,
-}) => {
+const ThreadPage: NextPage<ThreadPageProps> = ({ messages, thread }) => {
   const { deleteThread } = useAdminUtils();
+  const isAdmin = useContext(UserContext);
 
   return (
     <>
@@ -38,7 +34,7 @@ const ThreadPage: NextPage<ThreadPageProps> = ({
       <Main>
         <Section>
           <h1 className={styles["thread-name"]}>{thread.name}</h1>
-          {isLoggedIn && (
+          {isAdmin && (
             <Button
               onClick={() => deleteThread(thread._id)}
               className={styles["delete-thread-btn"]}
@@ -54,23 +50,15 @@ const ThreadPage: NextPage<ThreadPageProps> = ({
   );
 };
 
-export const getServerSideProps = withIronSessionSsr(
-  async function getServerSideProps({ req, params }) {
-    const threadId = params?.id as string;
-    const thread = await getThreadById(threadId);
-    if (!thread) return { notFound: true };
-    const messages = await getMessagesInThread(threadId);
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const threadId = params?.id as string;
+  const thread = await getThreadById(threadId);
+  if (!thread) return { notFound: true };
+  const messages = await getMessagesInThread(threadId);
 
-    // Check login status
-    let isLoggedIn = false;
-    const user = req.session.user;
-    if (user) isLoggedIn = true;
-
-    return {
-      props: { messages, thread, isLoggedIn },
-    };
-  },
-  sessionOptions
-);
+  return {
+    props: { messages, thread },
+  };
+};
 
 export default ThreadPage;

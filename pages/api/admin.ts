@@ -1,11 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createAdmin } from "../../services/adminService";
+import { withIronSessionApiRoute } from "iron-session/next";
+import { sessionOptions } from "../../lib/session";
 
 export type ResponseData = {
   message: string;
+  isAdmin?: boolean;
 };
 
-export default async function handler(
+export default withIronSessionApiRoute(async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData | null>
 ) {
@@ -29,11 +32,15 @@ export default async function handler(
       break;
 
     case "GET":
-      // TODO
-      res.status(404).send(null);
+      if (req.session.user) {
+        res.json({ message: "Current user is admin", isAdmin: true });
+      } else {
+        res.json({ message: "Current user is not admin", isAdmin: false });
+      }
       break;
 
     default:
       res.status(404).send(null);
   }
-}
+},
+sessionOptions);
