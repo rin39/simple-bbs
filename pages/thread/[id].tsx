@@ -23,7 +23,7 @@ interface ThreadPageProps {
 
 const ThreadPage: NextPage<ThreadPageProps> = ({ messages, thread }) => {
   const { deleteThread } = useAdminUtils();
-  const isAdmin = useContext(UserContext);
+  const { isAdmin } = useContext(UserContext);
 
   return (
     <>

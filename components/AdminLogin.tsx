@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import styles from "../styles/components/CommonForm.module.scss";
 import Button from "./Button";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { ResponseData as ApiResponse } from "../pages/api/login";
+import UserContext from "../context/UserContext";
 
 export default function AdminLogin() {
   const router = useRouter();
+  const { login } = useContext(UserContext);
 
   const [password, setPassword] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -35,12 +37,13 @@ export default function AdminLogin() {
       await axios.post<ApiResponse>("/api/login", {
         password,
       });
+      login();
       router.replace("/");
     } catch (e) {
       if (axios.isAxiosError(e)) {
         setError(e.response?.data.message);
       } else {
-        setError("Failed to create new thread");
+        setError("Failed to login");
       }
       setPassword("");
       setIsButtonDisabled(false);

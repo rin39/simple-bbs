@@ -14,7 +14,7 @@ export default function MessageListItem({
   message,
   className,
 }: MessageListItemProps) {
-  const isAdmin = useContext(UserContext);
+  const { isAdmin } = useContext(UserContext);
   const { deleteMessage } = useAdminUtils();
 
   return (
@@ -22,7 +22,7 @@ export default function MessageListItem({
       <div className={styles["message-header"]}>
         <div className={styles["message-header_left-group"]}>
           <span>#{message.number}</span>
-          {isAdmin && (
+          {isAdmin && message.number !== 0 && (
             <Button onClick={() => deleteMessage(message._id)}>Delete</Button>
           )}
         </div>
