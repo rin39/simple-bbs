@@ -1,11 +1,11 @@
 import { GetServerSideProps, NextPage } from "next";
 import { useState } from "react";
-import AppHead from "../../components/AppHead";
-import Button from "../../components/Button";
-import Main from "../../components/Main";
-import Navigation from "../../components/Navigation";
-import NewThreadForm from "../../components/NewThreadForm";
-import Section from "../../components/Section";
+import AppHead from "../../components/util/AppHead";
+import Button from "../../components/ui/Button";
+import Main from "../../components/layout/Main";
+import Section from "../../components/layout/Section";
+import Navigation from "../../components/ui/Navigation";
+import NewThreadForm from "../../components/form/NewThreadForm";
 import { BoardDocument, getBoardByAlias } from "../../services/boardService";
 import {
   getNumberOfPagesInBoard,
@@ -13,8 +13,8 @@ import {
   ThreadDocument,
 } from "../../services/threadService";
 import styles from "../../styles/pages/board.module.scss";
-import BoardPagination from "../../components/BoardPagination";
-import ThreadList from "../../components/ThreadList";
+import BoardPagination from "../../components/ui/BoardPagination";
+import ThreadList from "../../components/ui/ThreadList";
 
 interface BoardPageProps {
   board: BoardDocument;

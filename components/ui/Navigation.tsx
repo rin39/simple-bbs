@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import styles from "../styles/components/Navigation.module.scss";
+import styles from "../../styles/components/Navigation.module.scss";
 
 interface NavigationProps {
   additionalLinks?: {

@@ -1,5 +1,5 @@
-import { ThreadDocument } from "../services/threadService";
-import styles from "../styles/components/List.module.scss";
+import { ThreadDocument } from "../../services/threadService";
+import styles from "../../styles/components/List.module.scss";
 import ThreadListItem from "./ThreadListItem";
 
 interface ThreadListProps {

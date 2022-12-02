@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
-import styles from "../styles/components/CommonForm.module.scss";
-import Button from "./Button";
+import styles from "../../styles/components/CommonForm.module.scss";
+import Button from "../ui/Button";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { ResponseData as ApiResponse } from "../pages/api/login";
-import UserContext from "../context/UserContext";
+import { ResponseData as ApiResponse } from "../../pages/api/login";
+import UserContext from "../../context/UserContext";
 
-export default function AdminLogin() {
+export default function AdminLoginForm() {
   const router = useRouter();
   const { login } = useContext(UserContext);
 

@@ -1,20 +1,20 @@
 import { GetServerSideProps, NextPage } from "next";
-import AppHead from "../../components/AppHead";
+import AppHead from "../../components/util/AppHead";
 import {
   getMessagesInThread,
   MessageDocument,
 } from "../../services/messageService";
 import { getThreadById, ThreadDocument } from "../../services/threadService";
 import styles from "../../styles/pages/thread.module.scss";
-import Navigation from "../../components/Navigation";
-import NewMessageForm from "../../components/NewMessageForm";
-import Main from "../../components/Main";
-import Section from "../../components/Section";
-import Button from "../../components/Button";
+import Navigation from "../../components/ui/Navigation";
+import NewMessageForm from "../../components/form/NewMessageForm";
+import Main from "../../components/layout/Main";
+import Section from "../../components/layout/Section";
+import Button from "../../components/ui/Button";
 import useAdminUtils from "../../hooks/useAdminUtils";
 import { useContext } from "react";
 import UserContext from "../../context/UserContext";
-import MessageList from "../../components/MessageList";
+import MessageList from "../../components/ui/MessageList";
 
 interface ThreadPageProps {
   messages: MessageDocument[];

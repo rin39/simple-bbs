@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { ThreadDocument } from "../services/threadService";
-import styles from "../styles/components/CommonForm.module.scss";
+import { ThreadDocument } from "../../services/threadService";
+import styles from "../../styles/components/CommonForm.module.scss";
 import { useRouter } from "next/router";
-import Button from "./Button";
-import { ResponseData as ApiResponse } from "../pages/api/messages";
+import Button from "../ui/Button";
+import { ResponseData as ApiResponse } from "../../pages/api/messages";
 
 interface NewMessageFormProps {
   thread: ThreadDocument;

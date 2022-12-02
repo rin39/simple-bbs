@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
-import AppHead from "../components/AppHead";
-import BoardList from "../components/BoardList";
-import Main from "../components/Main";
+import AppHead from "../components/util/AppHead";
+import BoardList from "../components/ui/BoardList";
+import Main from "../components/layout/Main";
 import { getBoards, BoardDocument } from "../services/boardService";
 
 interface HomeProps {
@@ -13,7 +13,7 @@ const Home: NextPage<HomeProps> = ({ boards }) => {
     <>
       <AppHead title="Simple BBS" />
 
-      <Main isIndexPage>
+      <Main isCentered>
         <BoardList boards={boards} />
       </Main>
     </>

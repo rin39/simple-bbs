@@ -1,9 +1,9 @@
-import { MessageDocument } from "../services/messageService";
-import styles from "../styles/components/MessageListItem.module.scss";
+import { MessageDocument } from "../../services/messageService";
+import styles from "../../styles/components/MessageListItem.module.scss";
 import Button from "./Button";
 import { useContext } from "react";
-import UserContext from "../context/UserContext";
-import useAdminUtils from "../hooks/useAdminUtils";
+import UserContext from "../../context/UserContext";
+import useAdminUtils from "../../hooks/useAdminUtils";
 
 interface MessageListItemProps {
   message: MessageDocument;

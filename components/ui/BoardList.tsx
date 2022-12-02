@@ -1,6 +1,6 @@
-import { BoardDocument } from "../services/boardService";
+import { BoardDocument } from "../../services/boardService";
 import Link from "next/link";
-import styles from "../styles/components/List.module.scss";
+import styles from "../../styles/components/List.module.scss";
 
 interface BoardListProps {
   boards: BoardDocument[];

@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "../styles/components/CommonForm.module.scss";
+import styles from "../../styles/components/CommonForm.module.scss";
 import axios from "axios";
-import { BoardDocument } from "../services/boardService";
+import { BoardDocument } from "../../services/boardService";
 import { useRouter } from "next/router";
-import Button from "./Button";
-import { ResponseData as ApiResponse } from "../pages/api/threads/index";
+import Button from "../ui/Button";
+import { ResponseData as ApiResponse } from "../../pages/api/threads/index";
 
 interface NewThreadFormProps {
   board: BoardDocument;

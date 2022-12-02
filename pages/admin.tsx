@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import React from "react";
-import AppHead from "../components/AppHead";
-import Main from "../components/Main";
+import AppHead from "../components/util/AppHead";
+import Main from "../components/layout/Main";
 import { getAdmin } from "../services/adminService";
-import AdminLogin from "../components/AdminLogin";
-import AdminCreate from "../components/AdminCreate";
+import AdminLoginForm from "../components/form/AdminLoginForm";
+import AdminCreateForm from "../components/form/AdminCreateForm";
 import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions } from "../lib/session";
 
@@ -19,14 +19,14 @@ const Admin: NextPage<AdminProps> = ({ isAdminExists, isLoggedIn }) => {
   if (isLoggedIn) {
     mainContent = <div>Logged In</div>;
   } else {
-    mainContent = isAdminExists ? <AdminLogin /> : <AdminCreate />;
+    mainContent = isAdminExists ? <AdminLoginForm /> : <AdminCreateForm />;
   }
 
   return (
     <>
       <AppHead title="Admin - Simple BBS" />
 
-      <Main isIndexPage>{mainContent}</Main>
+      <Main isCentered>{mainContent}</Main>
     </>
   );
 };

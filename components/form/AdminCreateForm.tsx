@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import styles from "../styles/components/CommonForm.module.scss";
-import Button from "./Button";
-import { ResponseData as ApiResponse } from "../pages/api/admin";
+import styles from "../../styles/components/CommonForm.module.scss";
+import Button from "../ui/Button";
+import { ResponseData as ApiResponse } from "../../pages/api/admin";
 import { useRouter } from "next/router";
 
 const passwordPairInitialState = {
@@ -10,7 +10,7 @@ const passwordPairInitialState = {
   confirmPassword: "",
 };
 
-export default function AdminCreate() {
+export default function AdminCreateForm() {
   const router = useRouter();
 
   const [passwordPair, setPasswordPair] = useState(passwordPairInitialState);

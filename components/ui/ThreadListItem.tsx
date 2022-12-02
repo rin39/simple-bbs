@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import styles from "../styles/components/ThreadListItem.module.scss";
-import { ThreadDocument } from "../services/threadService";
+import styles from "../../styles/components/ThreadListItem.module.scss";
+import { ThreadDocument } from "../../services/threadService";
 import MessageListItem from "./MessageListItem";
 
 interface ThreadListItemsProps {
