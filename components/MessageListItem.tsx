@@ -7,7 +7,7 @@ import useAdminUtils from "../hooks/useAdminUtils";
 
 interface MessageListItemProps {
   message: MessageDocument;
-  className: string;
+  className?: string;
 }
 
 export default function MessageListItem({

@@ -71,7 +71,9 @@ export async function createMessage(threadId: string, message: string) {
   await dbConnect();
 
   let lastNumber = 0;
-  const lastMessage = await Message.findOne<HydratedDocument<IMessage>>()
+  const lastMessage = await Message.findOne<HydratedDocument<IMessage>>({
+    thread: threadId,
+  })
     .sort({ createdAt: -1 })
     .limit(1);
   if (lastMessage) lastNumber = lastMessage.number;

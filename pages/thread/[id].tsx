@@ -10,11 +10,11 @@ import Navigation from "../../components/Navigation";
 import NewMessageForm from "../../components/NewMessageForm";
 import Main from "../../components/Main";
 import Section from "../../components/Section";
-import List from "../../components/List";
 import Button from "../../components/Button";
 import useAdminUtils from "../../hooks/useAdminUtils";
 import { useContext } from "react";
 import UserContext from "../../context/UserContext";
+import MessageList from "../../components/MessageList";
 
 interface ThreadPageProps {
   messages: MessageDocument[];
@@ -42,7 +42,7 @@ const ThreadPage: NextPage<ThreadPageProps> = ({ messages, thread }) => {
               Delete Thread
             </Button>
           )}
-          <List of={messages} />
+          <MessageList messages={messages} />
           <NewMessageForm thread={thread} />
         </Section>
       </Main>

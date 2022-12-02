@@ -1,9 +1,8 @@
 import type { NextPage } from "next";
 import AppHead from "../components/AppHead";
-import List from "../components/List";
+import BoardList from "../components/BoardList";
 import Main from "../components/Main";
 import { getBoards, BoardDocument } from "../services/boardService";
-import styles from "../styles/pages/index.module.scss";
 
 interface HomeProps {
   boards: BoardDocument[];
@@ -15,10 +14,7 @@ const Home: NextPage<HomeProps> = ({ boards }) => {
       <AppHead title="Simple BBS" />
 
       <Main isIndexPage>
-        <section>
-          <h1 className={styles["board-list-heading"]}>Boards</h1>
-          <List of={boards} />
-        </section>
+        <BoardList boards={boards} />
       </Main>
     </>
   );

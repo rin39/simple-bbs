@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type { NextPage } from "next";
 import React from "react";
 import AppHead from "../components/AppHead";
 import Main from "../components/Main";

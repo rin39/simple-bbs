@@ -1,13 +1,11 @@
 import { GetServerSideProps, NextPage } from "next";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AppHead from "../../components/AppHead";
 import Button from "../../components/Button";
 import Main from "../../components/Main";
 import Navigation from "../../components/Navigation";
 import NewThreadForm from "../../components/NewThreadForm";
 import Section from "../../components/Section";
-import List from "../../components/List";
 import { BoardDocument, getBoardByAlias } from "../../services/boardService";
 import {
   getNumberOfPagesInBoard,
@@ -16,6 +14,7 @@ import {
 } from "../../services/threadService";
 import styles from "../../styles/pages/board.module.scss";
 import BoardPagination from "../../components/BoardPagination";
+import ThreadList from "../../components/ThreadList";
 
 interface BoardPageProps {
   board: BoardDocument;
@@ -36,7 +35,9 @@ const BoardPage: NextPage<BoardPageProps> = ({
   return (
     <>
       <AppHead title={`${board.name} - Simple BBS`} />
+
       <Navigation />
+
       <Main>
         <Section>
           {isNewThreadFormShown ? (
@@ -49,7 +50,7 @@ const BoardPage: NextPage<BoardPageProps> = ({
               Create New Thread
             </Button>
           )}
-          <List of={threads} />
+          <ThreadList threads={threads} />
           <BoardPagination
             pages={pages}
             currentPage={currentPage}
