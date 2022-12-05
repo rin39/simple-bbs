@@ -23,11 +23,7 @@ export default function ThreadListItem({ thread }: ThreadListItemsProps) {
       <hr className={styles["message-separator"]} />
       <ul>
         {thread.lastMessages?.map((message) => (
-          <MessageListItem
-            className={styles["latest-message"]}
-            key={message._id}
-            message={message}
-          />
+          <MessageListItem key={message._id} message={message} isPreview />
         ))}
       </ul>
     </li>

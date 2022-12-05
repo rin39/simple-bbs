@@ -7,22 +7,26 @@ import useAdminUtils from "../../hooks/useAdminUtils";
 
 interface MessageListItemProps {
   message: MessageDocument;
-  className?: string;
+  isPreview?: boolean;
 }
 
 export default function MessageListItem({
   message,
-  className,
+  isPreview = false,
 }: MessageListItemProps) {
   const { isAdmin } = useContext(UserContext);
   const { deleteMessage } = useAdminUtils();
 
+  const componentClassName = isPreview
+    ? styles["preview-message-list-item"]
+    : styles["message-list-item"];
+
   return (
-    <li className={className || styles["message-list-item"]}>
+    <li className={componentClassName}>
       <div className={styles["message-header"]}>
         <div className={styles["message-header_left-group"]}>
           <span>#{message.number}</span>
-          {isAdmin && message.number !== 0 && (
+          {!isPreview && isAdmin && message.number !== 0 && (
             <Button onClick={() => deleteMessage(message._id)}>Delete</Button>
           )}
         </div>
