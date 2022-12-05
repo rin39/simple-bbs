@@ -12,9 +12,10 @@ import Main from "../../components/layout/Main";
 import Section from "../../components/layout/Section";
 import Button from "../../components/ui/Button";
 import useAdminUtils from "../../hooks/useAdminUtils";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import UserContext from "../../context/UserContext";
 import MessageList from "../../components/ui/MessageList";
+import ConfirmModal from "../../components/ui/ConfirmModal";
 
 interface ThreadPageProps {
   messages: MessageDocument[];
@@ -22,6 +23,7 @@ interface ThreadPageProps {
 }
 
 const ThreadPage: NextPage<ThreadPageProps> = ({ messages, thread }) => {
+  const [isModalShown, setIsModalShown] = useState(false);
   const { deleteThread } = useAdminUtils();
   const { isAdmin } = useContext(UserContext);
 
@@ -36,7 +38,8 @@ const ThreadPage: NextPage<ThreadPageProps> = ({ messages, thread }) => {
           <h1 className={styles["thread-name"]}>{thread.name}</h1>
           {isAdmin && (
             <Button
-              onClick={() => deleteThread(thread._id)}
+              // onClick={() => deleteThread(thread._id)}
+              onClick={() => setIsModalShown(true)}
               className={styles["delete-thread-btn"]}
             >
               Delete Thread
@@ -46,6 +49,13 @@ const ThreadPage: NextPage<ThreadPageProps> = ({ messages, thread }) => {
           <NewMessageForm thread={thread} />
         </Section>
       </Main>
+
+      {isModalShown && (
+        <ConfirmModal
+          deleteFunc={() => deleteThread(thread._id)}
+          cancel={() => setIsModalShown(false)}
+        />
+      )}
     </>
   );
 };

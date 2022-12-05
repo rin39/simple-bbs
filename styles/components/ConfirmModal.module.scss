@@ -1,0 +1,33 @@
+@use '../variables';
+@use '../common';
+
+.confirm-modal {
+  width: min(100%, 230px);
+  height: 120px;
+  background-color: darken(variables.$bg-alt, 20);
+  @include common.flex-col(15px);
+  justify-content: center;
+  align-items: center;
+}
+
+.backdrop {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(variables.$bg, .5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  @include common.flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading {
+  color: variables.$fg-alt;
+  font-size: 1.5rem;
+}
+
+.button-group {
+  display: flex;
+  gap: 15px;
+}
