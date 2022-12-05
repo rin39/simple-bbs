@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import AppHead from "../components/util/AppHead";
 import BoardList from "../components/ui/BoardList";
 import Main from "../components/layout/Main";
@@ -20,13 +20,14 @@ const Home: NextPage<HomeProps> = ({ boards }) => {
   );
 };
 
-export async function getServerSideProps() {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const boards = await getBoards();
   return {
     props: {
       boards,
     },
+    revalidate: 60,
   };
-}
+};
 
 export default Home;
