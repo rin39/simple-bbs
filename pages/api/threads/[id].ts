@@ -20,7 +20,7 @@ export default withIronSessionApiRoute(async function handler(
     return res.status(401).json({ message: "Unauthorized" });
 
   if (typeof req.query.id !== "string")
-    return res.status(500).json({ message: "Id should be of string type" });
+    return res.status(400).json({ message: "Id should be of string type" });
 
   try {
     await deleteThread(req.query.id);

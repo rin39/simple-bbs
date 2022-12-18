@@ -15,7 +15,7 @@ export default async function handler(
   if (req.method !== "POST") return res.status(404).send(null);
 
   if (!isStringArray([req.body.name, req.body.message, req.body.board])) {
-    return res.status(500).json({
+    return res.status(400).json({
       message:
         "Name, message and board fields are required and must be of string type",
     });
@@ -27,7 +27,7 @@ export default async function handler(
       req.body.message.trim(),
       req.body.board.trim()
     );
-    res.status(200).json({
+    res.status(201).json({
       message: "Successfully created new thread",
       id: newThreadId,
     });

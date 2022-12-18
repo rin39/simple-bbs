@@ -15,14 +15,14 @@ export default withIronSessionApiRoute(async function handler(
   switch (req.method) {
     case "POST":
       if (!req.body.password) {
-        return res.status(500).json({
+        return res.status(400).json({
           message: "Password field is required",
         });
       }
       try {
         await createAdmin(req.body.password);
         res
-          .status(200)
+          .status(201)
           .json({ message: "Successfully created new admin password" });
       } catch {
         res

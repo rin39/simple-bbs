@@ -14,7 +14,7 @@ export default async function handler(
   if (req.method !== "POST") return res.status(404).send(null);
 
   if (!isStringArray([req.body.thread, req.body.message])) {
-    return res.status(500).json({
+    return res.status(400).json({
       message:
         "Thread and message fields are required and must be of string type",
     });
@@ -22,7 +22,7 @@ export default async function handler(
 
   try {
     await createMessage(req.body.thread.trim(), req.body.message.trim());
-    res.status(200).json({ message: "Successfully created new message" });
+    res.status(201).json({ message: "Successfully created new message" });
   } catch {
     res.status(500).json({ message: "Failed to create new message" });
   }
