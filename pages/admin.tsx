@@ -10,13 +10,13 @@ import { sessionOptions } from "../lib/session";
 
 interface AdminProps {
   isAdminExists: boolean;
-  isLoggedIn: boolean;
+  isAdmin: boolean;
 }
 
-const Admin: NextPage<AdminProps> = ({ isAdminExists, isLoggedIn }) => {
+const Admin: NextPage<AdminProps> = ({ isAdminExists, isAdmin }) => {
   // Content to be rendered inside Main component
   let mainContent;
-  if (isLoggedIn) {
+  if (isAdmin) {
     mainContent = <div>Logged In</div>;
   } else {
     mainContent = isAdminExists ? <AdminLoginForm /> : <AdminCreateForm />;
@@ -33,14 +33,14 @@ const Admin: NextPage<AdminProps> = ({ isAdminExists, isLoggedIn }) => {
 
 export const getServerSideProps = withIronSessionSsr(
   async function getServerSideProps({ req }) {
-    let isLoggedIn = false;
+    let isAdmin = false;
     const isAdminExists = Boolean(await getAdmin());
 
     const user = req.session.user;
-    if (user) isLoggedIn = true;
+    if (user && user.admin) isAdmin = true;
 
     return {
-      props: { isAdminExists, isLoggedIn },
+      props: { isAdminExists, isAdmin },
     };
   },
   sessionOptions
