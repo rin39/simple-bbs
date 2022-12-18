@@ -1,4 +1,4 @@
-import styles from "../../styles/components/ConfirmModal.module.scss";
+import styles from "../../styles/components/CommonModal.module.scss";
 import Button from "./Button";
 
 interface ConfirmModalProps {
@@ -12,7 +12,7 @@ export default function ConfirmModal({
 }: ConfirmModalProps) {
   return (
     <div className={styles["backdrop"]} onClick={() => cancel()}>
-      <div className={styles["confirm-modal"]}>
+      <div className={styles["modal"]}>
         <h1 className={styles["heading"]}>Are you sure?</h1>
         <div className={styles["button-group"]}>
           <Button onClick={() => deleteFunc()}>Delete</Button>

@@ -13,15 +13,19 @@
   margin-bottom: 30px;
 }
 
+.form-modal {
+  @include common.flex-col(10px);
+}
+
 .form-centered {
   @include common.flex-col(10px);
   align-items: center;
 }
 
 .form-heading-sm {
-    max-width: 180px;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
+  max-width: 180px;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
 .label {

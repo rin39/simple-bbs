@@ -1,9 +1,9 @@
 @use '../variables';
 @use '../common';
 
-.confirm-modal {
+.modal {
   width: min(100%, 230px);
-  height: 120px;
+  height: 180px;
   background-color: darken(variables.$bg-alt, 20);
   @include common.flex-col(15px);
   justify-content: center;
