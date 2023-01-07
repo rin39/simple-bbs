@@ -8,7 +8,7 @@ export interface NewBoardModalProps {
 export default function NewBoardModal({ cancel }: NewBoardModalProps) {
   return (
     <div className={styles["backdrop"]} onClick={() => cancel()}>
-      <div className={styles["modal"]}>
+      <div className={styles["modal"]} onClick={(e) => e.stopPropagation()}>
         <NewBoardForm cancel={() => cancel()} />
       </div>
     </div>
