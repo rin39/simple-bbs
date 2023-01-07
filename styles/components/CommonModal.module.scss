@@ -3,11 +3,8 @@
 
 .modal {
   width: min(100%, 230px);
-  height: 180px;
+  padding: 10px;
   background-color: darken(variables.$bg-alt, 20);
-  @include common.flex-col(15px);
-  justify-content: center;
-  align-items: center;
 }
 
 .backdrop {
@@ -25,9 +22,12 @@
 .heading {
   color: variables.$fg-alt;
   font-size: 1.5rem;
+  text-align: center;
 }
 
 .button-group {
   display: flex;
   gap: 15px;
+  justify-content: center;
+  margin-top: 15px;
 }
