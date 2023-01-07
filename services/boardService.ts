@@ -37,3 +37,13 @@ export async function getBoardByAlias(alias: string) {
     return null;
   }
 }
+
+export async function createBoard(name: string, alias: string) {
+  await dbConnect();
+  if ((await Board.find({ alias })).length > 0) {
+    throw new Error("Board with such alias already exists");
+  }
+  const board: HydratedDocument<IBoard> = new Board({ name, alias });
+  await board.save();
+  return board._id.toString();
+}
